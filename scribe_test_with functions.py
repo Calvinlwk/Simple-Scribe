@@ -14,47 +14,42 @@ string = input("Please enter your text: ")
 
 print(f"Thank you. You have entered: {string}.")
 
-def bold(list, string):
-    for i in list:
-        new_string = string.replace(i,"\033[1m"+i+"\033[0m")
-        string = new_string
-    print("You have selected Bold. The amended text is: "+string)
-    return string
+def bold(list_a, list_b):
+    for i in list_a:
+        x = list_b.index(i)
+        list_b[x] = "\033[1m"+i+"\033[0m"
+    return list_b
 
-def italics(list, string):
-    for i in list:
-        new_string = string.replace(i,"\033[3m"+i+"\033[0m")
-        string = new_string
-    print("You have selected Italics. The amended text is: "+string)
-    return string
+def italics(list_a, list_b):
+    for i in list_a:
+        x = list_b.index(i)
+        list_b[x] = "\033[3m"+i+"\033[0m"
+    return list_b
 
-def underline(list, string):
-    for i in list:
-        new_string = string.replace(i,"\033[4m"+i+"\033[0m")
-        string = new_string
-    print("You have selected Underline. The amended text is: "+string)
-    return string
+def underline(list_a, list_b):
+    for i in list_a:
+        x = list_b.index(i)
+        list_b[x] = "\033[4m"+i+"\033[0m"
+    return list_b
 
-def upper_case(list, string):
-    for i in list:
-        new_string= string.replace(i,i.upper())
-        string = new_string
-    print("You have selected UPPER CASE. The amended text is: "+string)
-    return string
+def upper_case(list_a, list_b):
+    for i in list_a:
+        x = list_b.index(i)
+        list_b[x] = i.upper()
+    return list_b
 
-def lower_case(list, string):
-    for i in list:
-        new_string= string.replace(i,i.lower())
-        string = new_string
-    print("You have selected LOWER CASE. The amended text is: "+string)
-    return string
+def lower_case(list_a, list_b):
+    for i in list_a:
+        x = list_b.index(i)
+        list_b[x] = i.lower()
+    return list_b
 
-def undo(list, string):
-    for i in list:
-        new_string = string.replace(i,"\033[0m"+i+"\033[0m")
-        string = new_string
-    print("You have selected Undo. The amended text is: "+string)
-    return string
+def undo(list_a, list_b):
+    for i in list_a:
+        x = list_b.index(i)
+        list_b[x] = "\033[0m"+i+"\033[0m"
+    return list_b
+        
 
 done = False
 
@@ -90,11 +85,12 @@ while not done:
         print("The amended text is: "+string)
 
     elif choice == "2":
+        str_list = string.split()
         selection = input("Please enter the text you would like to format: ")
         select_list = selection.split()
         error_count = 0
         for i in select_list:
-            if i not in string:
+            if i not in str_list:
                 error_count += 1
         while error_count > 0:    
             print("That is an invalid entry. Your selection does not appear in the text")
@@ -102,7 +98,7 @@ while not done:
             select_list = selection.split()
             error_count = 0
             for i in select_list:
-                if i not in string:
+                if i not in str_list:
                     error_count += 1
         print("Thank you. You have selected: "+selection)
         style = input(FORMAT_MENU)
@@ -110,25 +106,32 @@ while not done:
             print("That is not a valid entry. Please select an option from the menu below")
             style = input(FORMAT_MENU)
         if style == "1":
-            bold(select_list, string)
-            string = string
+            bold(select_list, str_list)
+            string = " ".join(str_list)
+            print("You have selected Bold. The amended text is: "+string)
         elif style == "2":
-            italics(select_list, string)
-            string = string
+            italics(select_list, str_list)
+            string = " ".join(str_list)
+            print("You have selected Italics. The amended text is: "+string)
         elif style == "3":
-            underline(select_list, string)
-            string = string
+            underline(select_list, str_list)
+            string = " ".join(str_list)
+            print("You have selected Underline. The amended text is: "+string)
+    
         elif style == "4":
             case = input("Would you like to change to 1. UPPER CASE or 2. lower case?")
             if case == "1":
-                upper_case(select_list, string)
-                string = string
-            if case == "2":
-                lower_case(select_list, string)
-                string = string
+                upper_case(select_list, str_list)
+                string = " ".join(str_list)
+                print("You have selected UPPER CASE. The amended text is: "+string)
+            elif case == "2":
+                lower_case(select_list, str_list)
+                string = " ".join(str_list)
+                print("You have selected lower case. The amended text is: "+string)
+                
         elif style == "5":
             undo(select_list, string)
-            string = string              
+                          
     
     elif choice == "3":
         print("The current version of the text is: "+string)

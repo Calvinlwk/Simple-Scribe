@@ -1,11 +1,16 @@
 MAIN_MENU = "Would you like to:\n1. Edit the text\n2. Format the text\n3. View the current version of the text\n4. Exit\n"
 FORMAT_MENU = "Please select an option:\n1. Bold\n2. Italics\n3. Underline\n4. Change case\n5. Undo change\n"
+ 
 
 print("Welcome to Simple Scribe")
 print("-"*40)
 string = input("Please enter your text: ")
-
+str_list = string.split()
 print(f"Thank you. You have entered: {string}.")
+
+EDIT_TEXT = f"Please enter the text you would like to change\nYou may enter one or more words or letters, separated by a comma\nFor example, if the text is '{string}', enter '{str_list[0]},{str_list[1]}' to change these 2 words\n"
+FORMAT_TEXT = f"Please enter the text you would like to format\nYou may enter one or more words or letters, separated by a comma\nFor example, if the text is '{string}', enter '{str_list[0]},{str_list[1]}' to format these 2 words\n"
+
 
 def undo(list, string):
     for i in list:
@@ -27,22 +32,26 @@ while not done:
     
     if choice == "1":
         print("You have selected Edit text")
-        selection = input("Please enter the text you would like to change (you may enter one or more words or letters, separated by a space): ")
-        select_list = selection.split()
+        print("-"*40)
+        selection = input(EDIT_TEXT)
+        print("-"*40)
+        select_list = selection.split(sep=",")
         error_count = 0
         for i in select_list:
             if i not in string:
                 error_count += 1
         while error_count > 0:    
             print("That is an invalid entry. Your selection does not appear in the text")
-            selection = input("Please enter the text you would like to change (you may enter one or more words or letters, separated by a space): ")
-            select_list = selection.split()
+            selection = input(EDIT_TEXT)
+            select_list = selection.split(sep=",")
             error_count = 0
             for i in select_list:
                 if i not in string:
                     error_count += 1
-        replace = input("Please enter the new text: ")
-        replace_list = replace.split()
+        replace = input("Please enter the new words or characters to replace your previous selection, separated by a comma\n")
+        replace_list = replace.split(sep = ",")
+        print(select_list)
+        print(replace_list)
         for i in range(len(select_list)):
             new_string = string.replace(select_list[i],replace_list[i])
             string = new_string
@@ -50,7 +59,7 @@ while not done:
 
      
     elif choice == "2":
-        selection = input("Please enter the text you would like to format (you may enter one or more words or letters, separated by a space): ")
+        selection = input(FORMAT_TEXT)
         select_list = selection.split()
         error_count = 0
         for i in select_list:
@@ -58,7 +67,7 @@ while not done:
                 error_count += 1
         while error_count > 0:    
             print("That is an invalid entry. Your selection does not appear in the text")
-            selection = input("Please enter the text you would like to format (you may enter one or more words or letters, separated by a space): ")
+            selection = input(FORMAT_TEXT)
             select_list = selection.split()
             error_count = 0
             for i in select_list:
